@@ -1,0 +1,5 @@
+{
+  "name": "NewsZero Aggregator",
+  "description": "A next-generation news aggregator featuring multiple themes (Crypto, Tech, Global), bento-grid layouts, and glassmorphism UI.",
+  "requestFramePermissions": []
+}
