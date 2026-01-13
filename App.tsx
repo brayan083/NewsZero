@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import HomeView from './views/HomeView';
 import TechView from './views/TechView';
 import ArgentinaView from './views/ArgentinaView';
@@ -6,27 +7,28 @@ import CryptoView from './views/CryptoView';
 import GlobalView from './views/GlobalView';
 import EmptyStateView from './views/EmptyStateView';
 
-export type ViewType = 'home' | 'tech' | 'argentina' | 'crypto' | 'global' | 'empty';
+// export type ViewType = 'home' | 'tech' | 'argentina' | 'crypto' | 'global' | 'empty';
+
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<ViewType>('home');
+  const navigate = useNavigate();
 
-  const navigate = (view: string) => {
-    setCurrentView(view as ViewType);
+  const handleNavigate = (view: string) => {
+    const path = view === 'home' ? '/' : `/${view}`;
+    navigate(path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <div className="relative min-h-screen font-display bg-[#0a0a0a] text-white overflow-x-hidden">
-      
-      {/* View Rendering */}
-      {currentView === 'home' && <HomeView onNavigate={navigate} />}
-      {currentView === 'tech' && <TechView onNavigate={navigate} />}
-      {currentView === 'argentina' && <ArgentinaView onNavigate={navigate} />}
-      {currentView === 'crypto' && <CryptoView onNavigate={navigate} />}
-      {currentView === 'global' && <GlobalView onNavigate={navigate} />}
-      {currentView === 'empty' && <EmptyStateView onNavigate={navigate} />}
-
+      <Routes>
+        <Route path="/" element={<HomeView />} />
+        <Route path="/tech" element={<TechView onNavigate={handleNavigate} />} />
+        <Route path="/argentina" element={<ArgentinaView onNavigate={handleNavigate} />} />
+        <Route path="/crypto" element={<CryptoView onNavigate={handleNavigate} />} />
+        <Route path="/global" element={<GlobalView onNavigate={handleNavigate} />} />
+        <Route path="/empty" element={<EmptyStateView onNavigate={handleNavigate} />} />
+      </Routes>
     </div>
   );
 }
